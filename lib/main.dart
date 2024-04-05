@@ -6,23 +6,23 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+
+          // useMaterial3: true, // Material3 not supported in stable release yet
+          ),
+      home: const MyHomePage(title: 'Animasyon ve Şifre gizleme App'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -31,20 +31,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  bool _obscureText = true;
 
-  void _incrementCounter() {
+  void _toggleVisibility() {
     setState(() {
-      _counter++;
+      _obscureText = !_obscureText;
     });
   }
 
-  bool flag = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         title: Text(widget.title),
       ),
       body: Center(
@@ -56,40 +55,52 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
-                  obscureText: flag ? true : false,
+                  obscureText: _obscureText,
                   decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.all(18),
-                      hintText: "Enter your password",
-                      border: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.black),
-                          borderRadius: BorderRadius.circular(12)),
-                      suffixIcon: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.remove_red_eye_outlined))),
+                    contentPadding: const EdgeInsets.all(18),
+                    hintText: "Enter your password",
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    suffixIcon: IconButton(
+                      onPressed: _toggleVisibility,
+                      icon: Icon(Icons.abc),
+                    ),
+                  ),
                 ),
               ),
             ),
             FadeInAnimation(
-              delay: 4.2,
+              delay: 2.2,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
-                  obscureText: flag ? true : false,
+                  obscureText: _obscureText,
                   decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.all(18),
-                      hintText: "Enter your password",
-                      border: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.black),
-                          borderRadius: BorderRadius.circular(12)),
-                      suffixIcon: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.remove_red_eye_outlined))),
+                    contentPadding: const EdgeInsets.all(18),
+                    hintText: "Enter your password",
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    suffixIcon: IconButton(
+                      onPressed: _toggleVisibility,
+                      icon: Icon(_obscureText
+                          ? Icons.visibility
+                          : Icons.visibility_off),
+                    ),
+                  ),
                 ),
               ),
             ),
             FadeInAnimation(
-                delay: 2.4,
-                child: TextButton(onPressed: () {}, child: Text("GİRİŞ YAP")))
+              delay: 4,
+              child: TextButton(
+                onPressed: () {},
+                child: Text("GİRİŞ YAP"),
+              ),
+            )
           ],
         ),
       ),
